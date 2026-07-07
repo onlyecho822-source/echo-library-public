@@ -3,261 +3,207 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OnlyEchoLibrary — The Enigma Library</title>
-  <meta name="description" content="OnlyEchoLibrary is not a library you browse. It is a library that reads you. Access is earned by what you express." />
+  <title>EchoLibrary — The Enigma Library</title>
+  <meta name="description" content="EchoLibrary is not a search engine. It is a library that reads you as much as you read it. Access is earned by what you express." />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --void: #050508;
-      --deep: #0D0D18;
-      --surface: #141420;
-      --echo: #7B4FFF;
-      --echo-light: #A87FFF;
-      --echo-glow: rgba(123,79,255,0.15);
-      --gold: #D4AF37;
-      --text: #D8D8E8;
-      --muted: #666680;
-      --dim: #333348;
+      --teal: #006D77; --teal-light: #00B4C4; --teal-pale: #E0F7FA;
+      --electric: #0077FF; --electric-light: #4DA6FF;
+      --indigo: #3D5A80; --indigo-light: #6B8FBF;
+      --gold: #FFB703; --gold-pale: #FFF8E1;
+      --white: #FFFFFF; --off-white: #F8FFFE; --light: #EEF9FA;
+      --text: #0A1628; --muted: #4A6070; --border: #B2EBF2;
     }
-    body {
-      font-family: 'Georgia', serif;
-      background: var(--void);
-      color: var(--text);
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    /* AMBIENT GLOW */
-    body::before {
-      content: '';
-      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-      background: radial-gradient(ellipse at 50% 0%, rgba(123,79,255,0.06) 0%, transparent 60%);
-      pointer-events: none; z-index: 0;
-    }
-
-    /* NAV */
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--white); color: var(--text); overflow-x: hidden; }
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      padding: 1.2rem 2rem;
-      display: flex; justify-content: space-between; align-items: center;
-      background: rgba(5,5,8,0.97);
-      border-bottom: 1px solid rgba(123,79,255,0.12);
+      padding: 1rem 2.5rem; display: flex; justify-content: space-between; align-items: center;
+      background: var(--white); box-shadow: 0 2px 20px rgba(0,109,119,0.1);
     }
-    .nav-logo { font-size: 1rem; color: var(--echo-light); letter-spacing: 0.12em; text-transform: uppercase; }
-    .nav-logo span { color: var(--muted); }
-    .nav-cta {
-      background: transparent; color: var(--echo-light);
-      border: 1px solid rgba(123,79,255,0.4);
-      padding: 0.45rem 1.1rem; border-radius: 4px;
-      text-decoration: none; font-size: 0.82rem; letter-spacing: 0.05em;
-      transition: all 0.2s;
-    }
-    .nav-cta:hover { background: var(--echo-glow); border-color: var(--echo-light); }
+    .nav-logo { font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 700; color: var(--teal); letter-spacing: -0.02em; }
+    .nav-logo .omega { color: var(--electric); }
+    .nav-links { display: flex; gap: 2rem; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--teal); }
+    .nav-cta { background: linear-gradient(135deg, var(--teal), var(--teal-light)); color: var(--white); padding: 0.6rem 1.5rem; border-radius: 50px; text-decoration: none; font-size: 0.9rem; font-weight: 700; box-shadow: 0 4px 15px rgba(0,109,119,0.3); transition: all 0.2s; }
+    .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,109,119,0.4); }
 
     /* HERO */
     .hero {
-      position: relative; z-index: 1;
       min-height: 100vh;
+      background: linear-gradient(160deg, #E0F7FA 0%, #F0F8FF 50%, #E8F5E9 100%);
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center; padding: 7rem 2rem 5rem;
+      text-align: center; padding: 7rem 2rem 5rem; position: relative; overflow: hidden;
     }
-    .hero-sigil {
-      width: 80px; height: 80px;
-      border: 1px solid rgba(123,79,255,0.3);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 2rem;
-      margin-bottom: 2.5rem;
-      background: radial-gradient(circle, rgba(123,79,255,0.1), transparent);
-      box-shadow: 0 0 40px rgba(123,79,255,0.15);
+    .hero::before {
+      content: ''; position: absolute; top: -15%; right: -10%;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(0,180,196,0.1), transparent 65%);
+      border-radius: 50%; pointer-events: none;
     }
-    .hero-eyebrow {
-      color: var(--muted); font-size: 0.78rem; letter-spacing: 0.2em;
-      text-transform: uppercase; margin-bottom: 1.5rem;
+    .hero::after {
+      content: ''; position: absolute; bottom: -10%; left: -8%;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(0,119,255,0.07), transparent 65%);
+      border-radius: 50%; pointer-events: none;
     }
-    .hero h1 {
-      font-size: clamp(2.8rem, 7vw, 5.5rem);
-      font-weight: bold; line-height: 1.05;
-      margin-bottom: 1.5rem;
-      background: linear-gradient(135deg, var(--text) 0%, var(--echo-light) 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .hero-divider {
-      width: 60px; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--echo), transparent);
-      margin: 1.5rem auto;
-    }
-    .hero p {
-      font-size: clamp(1rem, 2vw, 1.2rem);
-      color: var(--muted); max-width: 550px; line-height: 1.8;
-      margin-bottom: 3rem; font-style: italic;
-    }
+    .hero-symbol { font-size: 4.5rem; margin-bottom: 1rem; position: relative; z-index: 1; animation: pulse 4s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.85;transform:scale(1.05)} }
+    .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(0,109,119,0.1); border: 1.5px solid rgba(0,109,119,0.25); color: var(--teal); padding: 0.45rem 1.1rem; border-radius: 50px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.07em; margin-bottom: 1.5rem; text-transform: uppercase; position: relative; z-index: 1; }
+    .hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.8rem, 7vw, 6rem); font-weight: 700; line-height: 1.05; color: var(--text); letter-spacing: -0.03em; margin-bottom: 0.8rem; position: relative; z-index: 1; }
+    .hero h1 .c1 { color: var(--teal); } .hero h1 .c2 { color: var(--electric); }
+    .hero-tagline { font-size: clamp(1rem, 2.5vw, 1.3rem); font-weight: 700; color: var(--indigo); margin-bottom: 1.2rem; position: relative; z-index: 1; font-style: italic; }
+    .hero-sub { font-size: clamp(1rem, 2vw, 1.15rem); color: var(--muted); max-width: 580px; line-height: 1.7; margin: 0 auto 2.5rem; position: relative; z-index: 1; }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; position: relative; z-index: 1; }
+    .btn-teal { background: linear-gradient(135deg, var(--teal), var(--teal-light)); color: var(--white); padding: 1rem 2.2rem; border-radius: 50px; text-decoration: none; font-weight: 800; font-size: 1rem; box-shadow: 0 6px 25px rgba(0,109,119,0.35); transition: all 0.2s; }
+    .btn-teal:hover { transform: translateY(-3px); box-shadow: 0 10px 35px rgba(0,109,119,0.45); }
+    .btn-outline { background: var(--white); color: var(--teal); border: 2px solid var(--teal); padding: 1rem 2.2rem; border-radius: 50px; text-decoration: none; font-size: 1rem; font-weight: 700; transition: all 0.2s; }
+    .btn-outline:hover { background: var(--teal); color: var(--white); transform: translateY(-3px); }
 
-    /* GATE */
-    .gate {
-      background: var(--surface);
-      border: 1px solid rgba(123,79,255,0.2);
-      border-radius: 12px; padding: 2.5rem;
-      max-width: 500px; width: 100%;
-      margin-bottom: 2rem;
-    }
-    .gate-title {
-      color: var(--echo-light); font-size: 0.8rem;
-      letter-spacing: 0.15em; text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-    .gate p {
-      color: var(--muted); font-size: 0.9rem; line-height: 1.6;
-      margin-bottom: 1.5rem; font-style: normal;
-    }
-    .gate textarea {
-      width: 100%; background: var(--deep);
-      border: 1px solid var(--dim); border-radius: 8px;
-      color: var(--text); padding: 1rem; font-size: 0.9rem;
-      font-family: inherit; resize: vertical; min-height: 100px;
-      margin-bottom: 1rem; outline: none;
-      transition: border-color 0.2s;
-    }
-    .gate textarea:focus { border-color: rgba(123,79,255,0.5); }
-    .gate textarea::placeholder { color: var(--muted); }
-    .gate-btn {
-      width: 100%; background: var(--echo);
-      color: white; border: none; border-radius: 8px;
-      padding: 0.9rem; font-size: 0.95rem; font-family: inherit;
-      cursor: pointer; letter-spacing: 0.05em;
-      transition: background 0.2s, transform 0.2s;
-    }
-    .gate-btn:hover { background: var(--echo-light); transform: translateY(-1px); }
-    .gate-note {
-      color: var(--muted); font-size: 0.75rem; text-align: center;
-      margin-top: 0.8rem; font-style: italic;
-    }
+    /* ENIGMA SECTION */
+    .enigma-section { background: var(--light); padding: 5rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-tag { display: inline-block; background: var(--teal-pale); color: var(--teal); padding: 0.3rem 0.9rem; border-radius: 50px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; }
+    .section-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; color: var(--text); margin-bottom: 1rem; line-height: 1.2; }
+    .section-sub { color: var(--muted); font-size: 1.05rem; line-height: 1.7; max-width: 600px; }
+    .enigma-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+    .enigma-card { background: var(--white); border-radius: 20px; padding: 2.2rem 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; border-left: 5px solid transparent; }
+    .enigma-card.c1 { border-left-color: var(--teal); } .enigma-card.c2 { border-left-color: var(--electric); } .enigma-card.c3 { border-left-color: var(--gold); } .enigma-card.c4 { border-left-color: var(--indigo); }
+    .enigma-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
+    .enigma-icon { font-size: 2.5rem; margin-bottom: 0.8rem; }
+    .enigma-card h3 { font-size: 1.1rem; font-weight: 800; color: var(--text); margin-bottom: 0.5rem; }
+    .enigma-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.65; }
 
-    /* WHAT IS */
-    .what-section {
-      position: relative; z-index: 1;
-      max-width: 900px; margin: 0 auto; padding: 5rem 2rem;
-    }
-    .what-section .section-label {
-      color: var(--echo-light); font-size: 0.78rem;
-      letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 1.5rem;
-    }
-    .what-section h2 {
-      font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: 1.5rem; line-height: 1.2;
-    }
-    .what-section p {
-      color: var(--muted); font-size: 1.05rem; line-height: 1.8; margin-bottom: 1.5rem;
-    }
-
-    /* TIERS */
-    .tiers {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.2rem; margin-top: 3rem;
-    }
-    .tier {
-      background: var(--deep); border: 1px solid var(--dim);
-      border-radius: 10px; padding: 1.8rem;
-      transition: border-color 0.2s;
-    }
-    .tier:hover { border-color: rgba(123,79,255,0.3); }
-    .tier-level {
-      color: var(--echo-light); font-size: 0.75rem;
-      letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.8rem;
-    }
-    .tier h3 { font-size: 1rem; margin-bottom: 0.5rem; }
-    .tier p { color: var(--muted); font-size: 0.85rem; line-height: 1.6; }
+    /* SORTER SECTION */
+    .sorter-section { background: linear-gradient(135deg, var(--teal) 0%, var(--indigo) 100%); padding: 5rem 2rem; }
+    .sorter-section .section-tag { background: rgba(255,255,255,0.2); color: var(--white); }
+    .sorter-section .section-title { color: var(--white); }
+    .sorter-section .section-sub { color: rgba(255,255,255,0.82); }
+    .sorter-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.2rem; margin-top: 3rem; }
+    .sorter-card { background: rgba(255,255,255,0.12); border: 1.5px solid rgba(255,255,255,0.2); border-radius: 16px; padding: 2rem 1.5rem; text-align: center; transition: all 0.2s; backdrop-filter: blur(4px); }
+    .sorter-card:hover { background: rgba(255,255,255,0.2); transform: translateY(-4px); }
+    .sorter-icon { font-size: 2.2rem; margin-bottom: 0.8rem; }
+    .sorter-card h3 { font-size: 0.95rem; font-weight: 800; color: var(--white); margin-bottom: 0.4rem; }
+    .sorter-card p { color: rgba(255,255,255,0.72); font-size: 0.82rem; line-height: 1.55; }
 
     /* QUOTE */
-    .enigma-quote {
-      position: relative; z-index: 1;
-      max-width: 700px; margin: 0 auto; padding: 4rem 2rem;
-      text-align: center;
-    }
-    .enigma-quote blockquote {
-      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
-      font-style: italic; line-height: 1.7;
-      color: var(--text); margin-bottom: 1rem;
-    }
-    .enigma-quote cite { color: var(--echo-light); font-size: 0.85rem; font-style: normal; }
+    .quote-section { background: var(--gold-pale); padding: 5rem 2rem; text-align: center; border-top: 4px solid var(--gold); border-bottom: 4px solid var(--gold); }
+    .quote-section blockquote { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.3rem, 3.5vw, 2.2rem); font-weight: 600; color: var(--text); max-width: 750px; margin: 0 auto; line-height: 1.5; font-style: italic; }
+    .quote-section cite { display: block; margin-top: 1.5rem; color: var(--teal); font-size: 0.95rem; font-style: normal; font-weight: 700; }
 
-    /* FOOTER */
-    footer {
-      position: relative; z-index: 1;
-      background: var(--deep);
-      border-top: 1px solid rgba(123,79,255,0.1);
-      padding: 3rem 2rem; text-align: center;
-    }
-    footer .footer-logo { font-size: 1rem; color: var(--echo-light); letter-spacing: 0.12em; margin-bottom: 0.5rem; }
-    footer p { color: var(--muted); font-size: 0.82rem; }
-    footer a { color: var(--echo-light); text-decoration: none; }
+    /* ACCESS SECTION */
+    .access-section { background: var(--off-white); padding: 5rem 2rem; }
+    .access-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+    .access-card { background: var(--white); border-radius: 20px; padding: 2.2rem 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.06); transition: transform 0.2s; }
+    .access-card:hover { transform: translateY(-4px); }
+    .access-num { font-family: 'Space Grotesk', sans-serif; font-size: 2.5rem; font-weight: 700; color: var(--teal-light); margin-bottom: 0.5rem; }
+    .access-card h3 { font-size: 1rem; font-weight: 800; color: var(--text); margin-bottom: 0.5rem; }
+    .access-card p { color: var(--muted); font-size: 0.88rem; line-height: 1.6; }
+
+    /* CTA */
+    .cta-section { background: var(--light); padding: 5rem 2rem; text-align: center; }
+    .cta-section h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; color: var(--text); margin-bottom: 1rem; }
+    .cta-section p { color: var(--muted); font-size: 1.1rem; max-width: 520px; margin: 0 auto 2rem; line-height: 1.65; }
+    .btn-cta { background: linear-gradient(135deg, var(--teal), var(--electric)); color: var(--white); padding: 1.1rem 2.8rem; border-radius: 50px; text-decoration: none; font-weight: 800; font-size: 1.05rem; display: inline-block; box-shadow: 0 6px 25px rgba(0,109,119,0.35); transition: all 0.2s; }
+    .btn-cta:hover { transform: translateY(-3px); box-shadow: 0 10px 35px rgba(0,109,119,0.45); }
+
+    footer { background: var(--text); padding: 3rem 2rem; text-align: center; }
+    .footer-logo { font-family: 'Space Grotesk', sans-serif; font-size: 1.6rem; font-weight: 700; color: var(--teal-light); margin-bottom: 0.5rem; }
+    .footer-links { display: flex; justify-content: center; gap: 2rem; margin: 1rem 0; flex-wrap: wrap; }
+    .footer-links a { color: rgba(255,255,255,0.5); font-size: 0.85rem; text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--teal-light); }
+    footer p { color: rgba(255,255,255,0.3); font-size: 0.82rem; }
+    @media (max-width: 768px) { .nav-links { display: none; } .hero-actions { flex-direction: column; align-items: center; } }
   </style>
 </head>
 <body>
-
 <nav>
-  <div class="nav-logo">Only<span>Echo</span>Library</div>
-  <a href="#gate" class="nav-cta">Request Access</a>
+  <div class="nav-logo">Echo<span class="omega">Library</span></div>
+  <div class="nav-links">
+    <a href="#enigma">The Library</a>
+    <a href="#sorter">How It Reads You</a>
+    <a href="#access">Get Access</a>
+  </div>
+  <a href="#access" class="nav-cta">Request Access</a>
 </nav>
 
 <div class="hero">
-  <div class="hero-sigil">◈</div>
-  <div class="hero-eyebrow">Echo Universe · Knowledge Division</div>
-  <h1>The Enigma Library</h1>
-  <div class="hero-divider"></div>
-  <p>This is not a library you browse. It is a library that reads you. Access is not given — it is earned by what you express.</p>
-
-  <div class="gate" id="gate">
-    <div class="gate-title">◈ Access Gate</div>
-    <p>Tell us what you are searching for. Not a keyword — a question you cannot stop thinking about. The library sorts by what you express, not what you request.</p>
-    <textarea placeholder="What question has been following you?"></textarea>
-    <button class="gate-btn" onclick="this.textContent='Analyzing your signal...'; setTimeout(()=>this.textContent='Your access level is being determined. You will be notified.', 2000)">
-      Submit Your Signal
-    </button>
-    <div class="gate-note">Access levels: Observer · Reader · Scholar · Architect</div>
+  <div class="hero-symbol">📚</div>
+  <div class="hero-badge">Echo Universe · Knowledge Vault</div>
+  <h1>The Library<br/><span class="c1">Reads</span> <span class="c2">You</span>.</h1>
+  <div class="hero-tagline">Not everyone gets in. The library decides who belongs.</div>
+  <p class="hero-sub">EchoLibrary is not a search engine. It is an enigma library — a living knowledge vault that sorts users by what they express. The deeper your thinking, the deeper your access.</p>
+  <div class="hero-actions">
+    <a href="#access" class="btn-teal">🔑 Request Access</a>
+    <a href="#enigma" class="btn-outline">How It Works</a>
   </div>
 </div>
 
-<div class="what-section">
-  <div class="section-label">What Is This</div>
-  <h2>A Knowledge Archive Built on Proof, Not Opinion</h2>
-  <p>OnlyEchoLibrary is the public-facing knowledge vault of the Echo Universe. Every document, framework, and research paper stored here has been run through the EKHΩMEGA falsification pipeline. Nothing is published without a proof hash.</p>
-  <p>The library does not reward curiosity alone. It rewards the kind of curiosity that asks the question that changes everything. The gate exists to find those people.</p>
-
-  <div class="tiers">
-    <div class="tier">
-      <div class="tier-level">Level 1</div>
-      <h3>Observer</h3>
-      <p>Public summaries and introductory frameworks. The surface of the archive.</p>
-    </div>
-    <div class="tier">
-      <div class="tier-level">Level 2</div>
-      <h3>Reader</h3>
-      <p>Full research papers, decision case studies, and the EKHΩMEGA methodology in practice.</p>
-    </div>
-    <div class="tier">
-      <div class="tier-level">Level 3</div>
-      <h3>Scholar</h3>
-      <p>Raw proof hashes, falsification logs, and the complete evidence chains behind every published claim.</p>
-    </div>
-    <div class="tier">
-      <div class="tier-level">Level 4</div>
-      <h3>Architect</h3>
-      <p>The resonance engines, the mathematical frameworks, and the unpublished doctrine. By invitation only.</p>
+<div class="enigma-section" id="enigma">
+  <div class="container">
+    <div class="section-tag">The Enigma Library</div>
+    <h2 class="section-title">A Library That Knows the Difference Between Readers and Thinkers.</h2>
+    <p class="section-sub">Most libraries give everyone the same books. EchoLibrary gives you the books you are ready for — and withholds the ones you are not. Yet.</p>
+    <div class="enigma-grid">
+      <div class="enigma-card c1"><div class="enigma-icon">🧭</div><h3>Adaptive Access</h3><p>Your access level expands as your thinking deepens. The library tracks what you express, not just what you search for.</p></div>
+      <div class="enigma-card c2"><div class="enigma-icon">🔬</div><h3>Verified Knowledge</h3><p>Every entry passes the EKHOMEGA falsification test. No speculation without evidence. No claim without a boundary condition.</p></div>
+      <div class="enigma-card c3"><div class="enigma-icon">🌐</div><h3>Cross-Domain Synthesis</h3><p>The library connects mathematics, philosophy, strategy, language, and science into a single coherent knowledge architecture.</p></div>
+      <div class="enigma-card c4"><div class="enigma-icon">🔒</div><h3>Earned Depth</h3><p>The deepest stacks are not locked by payment. They are locked by readiness. Express the right questions and the doors open.</p></div>
     </div>
   </div>
 </div>
 
-<div class="enigma-quote">
-  <blockquote>"Most libraries tell you what people know. This one tells you what they were willing to question."</blockquote>
-  <cite>— Nathan Poinsette, Founder · Echo Universe</cite>
+<div class="sorter-section" id="sorter">
+  <div class="container">
+    <div class="section-tag">How It Reads You</div>
+    <h2 class="section-title" style="text-align:center;">You Are Sorted by What You Express.</h2>
+    <p class="section-sub" style="margin:0 auto; text-align:center;">EchoLibrary does not ask you to fill out a form. It listens to how you think — and places you accordingly.</p>
+    <div class="sorter-grid">
+      <div class="sorter-card"><div class="sorter-icon">💬</div><h3>The Questioner</h3><p>You ask questions that do not have easy answers. You belong in the philosophy and decision stacks.</p></div>
+      <div class="sorter-card"><div class="sorter-icon">🔢</div><h3>The Architect</h3><p>You think in systems and structures. The mathematics and resonance stacks are yours.</p></div>
+      <div class="sorter-card"><div class="sorter-icon">🌍</div><h3>The Strategist</h3><p>You see patterns across domains. The strategy and intelligence stacks open for you.</p></div>
+      <div class="sorter-card"><div class="sorter-icon">🎨</div><h3>The Creator</h3><p>You build things that did not exist before. The language and expression stacks respond to you.</p></div>
+      <div class="sorter-card"><div class="sorter-icon">⚗️</div><h3>The Scientist</h3><p>You demand evidence before belief. The research and falsification stacks are your home.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="quote-section">
+  <blockquote>"The right book at the wrong time is wasted. EchoLibrary makes sure you are never given more than you can use — and never given less than you deserve."</blockquote>
+  <cite>— Echo Universe · Knowledge Architecture</cite>
+</div>
+
+<div class="access-section" id="access">
+  <div class="container">
+    <div class="section-tag">How to Get In</div>
+    <h2 class="section-title">Access Is Earned. Here Is How.</h2>
+    <p class="section-sub">EchoLibrary does not have a sign-up button. It has an expression portal. Tell us what you are thinking about and the library will tell you where you belong.</p>
+    <div class="access-grid">
+      <div class="access-card"><div class="access-num">01</div><h3>Express Your Question</h3><p>Submit the question you cannot stop thinking about. The library reads the depth of your inquiry.</p></div>
+      <div class="access-card"><div class="access-num">02</div><h3>Receive Your Stack</h3><p>Within 24 hours, you receive your initial access tier and the first three entries matched to your thinking pattern.</p></div>
+      <div class="access-card"><div class="access-num">03</div><h3>Go Deeper</h3><p>As you engage, your access expands. The library tracks your expression and unlocks the next layer automatically.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="cta-section">
+  <h2>What Are You Thinking About?</h2>
+  <p>Submit your question. The library will tell you where you belong. Not everyone gets the same door — but every serious thinker gets one.</p>
+  <a href="#" class="btn-cta">🔑 Submit Your Question</a>
 </div>
 
 <footer>
-  <div class="footer-logo">OnlyEchoLibrary</div>
-  <p>Knowledge Division of the <a href="#">Echo Universe</a></p>
-  <p style="margin-top:1.5rem;">© 2026 OnlyEchoLibrary · All rights reserved</p>
+  <div class="footer-logo">EchoLibrary</div>
+  <div class="footer-links">
+    <a href="#enigma">The Library</a>
+    <a href="#sorter">How It Reads You</a>
+    <a href="#access">Get Access</a>
+    <a href="mailto:library@echoveritas.com">Contact</a>
+  </div>
+  <p>© 2026 EchoLibrary · Part of the Echo Universe · All rights reserved</p>
 </footer>
-
 </body>
 </html>
